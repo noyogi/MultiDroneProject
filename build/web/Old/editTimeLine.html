@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<!--
+Mission Editor
+
+@version 0.1
+@author Winterfeldt
+
+Mission Editor to define actions for our objects. After the scenario creation the actions will be rendered 
+to timelines. The timelines can then be executed.
+
+-->
+<html>
+    <head>
+        <title>Mission Editor</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="CSS/jquery-ui.css">
+        <link rel="stylesheet" href="CSS/gui.css">
+
+        <link type="text/css" rel="stylesheet" href="jsGrid/jsgrid.min.css" />
+        <link type="text/css" rel="stylesheet" href="jsGrid/jsgrid-theme.min.css" />
+        <link type="text/css" rel="stylesheet" href="CSS/editTimeLine.css" />
+        <script src="JS/jquery-3.2.1.js"></script>
+        <script src="JS/jquery-ui.js"></script>
+        <script type="text/javascript" src="jsGrid/jsgrid.min.js"></script>
+        
+        <script src="JS/gui.js"></script>
+        <script type="text/javascript" src="JS/eventemitter2.min.js"></script>
+        <script type="text/javascript" src="JS/roslib.min.js"></script>
+        <script type="text/javascript" src="JS/drone.js"></script>
+        <script type="text/javascript" src="JS/commands.js"></script>
+        <script type="text/javascript" src="JS/timeline.js"></script>
+        <script type="text/javascript" src="JS/project.js"></script>
+        <script type="text/javascript" src="JS/editTimeLine.js"></script>
+        
+        
+        
+        
+        
+        
+    </head>
+    <body>
+        <h1>Timeline Editor</h1>
+        <div id="header">
+        <button onclick="loadDB();">Reset Project</button>
+        <button onclick="saveAndRender();">Save and Render Project</button>
+        The robot is not integrated yet.
+        </div>
+        <div id="timeline">
+            <form id="Projekt"> 
+                    <label id="objectLabel">Select</label>
+                        <select name="Object" id="objectChoose">
+                          <option>Robot</option>        
+                        </select>
+                    <div id='activeButton'>
+                        Active <input type='checkbox' id='check' checked="checked" />   
+                    </div>
+            </form>
+            
+            <div id="jsGrid1"></div>
+        </div>
+        <div id="timeline">
+            <form id="Projekt"> 
+                    <label id="objectLabel">Select</label>
+                        <select name="Object" id="objectChoose">
+                          <option selected="selected">Drone1</option>
+                          <option>Drone2</option>
+                          <option>Drone3</option>
+                          <option>Drone4</option>
+                          <option>Drone5</option>            
+                        </select>
+                    <div id='activeButton'>
+                        Active <input type='checkbox' id='check' checked="checked" />   
+                    </div>
+            </form>
+            
+            <div id="jsGrid2"></div>
+        </div>
+        <div id="timeline">
+            <form id="Projekt"> 
+                    <label id="objectLabel">Select</label>
+                        <select name="Object" id="objectChoose">
+                          <option>Drone1</option>
+                          <option selected="selected">Drone2</option>
+                          <option>Drone3</option>
+                          <option>Drone4</option>
+                          <option>Drone5</option>            
+                        </select>
+                    <div id='activeButton'>
+                        Active <input type='checkbox' id='check' checked="checked" />   
+                    </div>
+            </form>
+            
+            <div id="jsGrid3"></div>
+        </div>
+        <div id="timeline">
+            <form id="Projekt"> 
+                    <label id="objectLabel">Select</label>
+                        <select name="Object" id="objectChoose">
+                          <option>Drone1</option>
+                          <option>Drone2</option>
+                          <option selected="selected">Drone3</option>
+                          <option>Drone4</option>
+                          <option>Drone5</option>            
+                        </select>
+                    <div id='activeButton'>
+                        Active <input type='checkbox' id='check' checked="checked" />   
+                    </div>
+            </form>
+            
+            <div id="jsGrid4"></div>
+        </div>
+        <div id="timeline">
+            <form id="Projekt"> 
+                    <label id="objectLabel">Select</label>
+                        <select name="Object" id="objectChoose">
+                          <option>Drone1</option>
+                          <option>Drone2</option>
+                          <option>Drone3</option>
+                          <option selected="selected">Drone4</option>
+                          <option>Drone5</option>            
+                        </select>
+                    <div id='activeButton'>
+                        Active <input type='checkbox' id='check' checked="checked" />   
+                    </div>
+            </form>
+            
+            <div id="jsGrid5"></div>
+        </div>
+        <div id="timeline">
+            <form id="Projekt"> 
+                    <label id="objectLabel">Select</label>
+                        <select name="Object" id="objectChoose">
+                          <option>Drone1</option>
+                          <option>Drone2</option>
+                          <option>Drone3</option>
+                          <option>Drone4</option>
+                          <option selected="selected">Drone5</option>            
+                        </select>
+                    <div id='activeButton'>
+                        Active <input type='checkbox' id='check' />   
+                    </div>
+            </form>
+            
+            <div id="jsGrid6"></div>
+        </div>
+        
+        
+        <script>
+            var clients = [
+
+            ];
+
+            var com1 = [
+                {Name: "", Id: 0},
+                {Name: "takeoff", Id: 1},
+                {Name: "land", Id: 2},
+                {Name: "forward", Id: 3},
+                {Name: "backward", Id: 4},
+                {Name: "spinright", Id: 5},
+                {Name: "spinLeft", Id: 6},
+                {Name: "up", Id: 7},
+                {Name: "down", Id: 8},
+                {Name: "left", Id: 9},
+                {Name: "right", Id: 10}
+
+            ];
+            
+            var com2 = [
+                {Name: "", Id: 0},
+                {Name: "forward", Id: 1},
+                {Name: "backward", Id: 2},
+                {Name: "turnLeft", Id: 3},
+                {Name: "turnRight", Id: 4},
+                {Name: "armsUp", Id: 5},
+                {Name: "armsDown", Id: 6},
+            ];
+
+            $("#jsGrid1").jsGrid({
+                width: "100%",
+                height: "400px",
+
+                inserting: true,
+                editing: false,
+                sorting: true,
+                paging: true,
+
+                data: clients,
+
+                fields: [
+                    {name: "Command", type: "select", items: com2, valueField: "Id", textField: "Name", validate: "required", width: 40},
+                    {name: "Time", type: "number", width: 50},
+                    {type: "control"}
+                ],
+                rowClick: function (args) {
+                    alert("clicked " + args.item.Name);
+                },
+                onItemDeleting: function (args) {
+                    alert("Delete from DB " + args.item.Name);
+                }
+            });
+
+            $("#jsGrid2").jsGrid({
+                width: "100%",
+                height: "400px",
+
+                inserting: true,
+                editing: false,
+                sorting: true,
+                paging: true,
+
+                data: clients,
+
+                fields: [
+                    {name: "Command", type: "select", items: com1, valueField: "Id", textField: "Name", validate: "required"},
+                    {name: "Time", type: "number", width: 50},
+                    {type: "control"}
+                ],
+                rowClick: function (args) {
+                    alert("clicked " + args.item.Name);
+                },
+                onItemDeleting: function (args) {
+                    alert("Delete from action plan " + args.item.Name);
+                }
+            });
+
+            $("#jsGrid3").jsGrid({
+                width: "100%",
+                height: "400px",
+
+                inserting: true,
+                editing: false,
+                sorting: true,
+                paging: true,
+
+                data: clients,
+
+                fields: [
+                    {name: "Command", type: "select", items: com1, valueField: "Id", textField: "Name", validate: "required"},
+                    {name: "Time", type: "number", width: 50},
+                    {type: "control"}
+                ],
+                rowClick: function (args) {
+                    alert("clicked " + args.item.Name);
+                },
+                onItemDeleting: function (args) {
+                    alert("Delete from DB " + args.item.Name);
+                }
+            });
+            $("#jsGrid4").jsGrid({
+                width: "100%",
+                height: "400px",
+
+                inserting: true,
+                editing: false,
+                sorting: true,
+                paging: true,
+
+                data: clients,
+
+                fields: [
+                    {name: "Command", type: "select", items: com1, valueField: "Id", textField: "Name", validate: "required"},
+                    {name: "Time", type: "number", width: 50},
+                    {type: "control"}
+                ],
+                rowClick: function (args) {
+                    alert("clicked " + args.item.Name);
+                },
+                onItemDeleting: function (args) {
+                    alert("Delete from DB " + args.item.Name);
+                }
+            });
+            $("#jsGrid5").jsGrid({
+                width: "100%",
+                height: "400px",
+
+                inserting: true,
+                editing: false,
+                sorting: true,
+                paging: true,
+
+                data: clients,
+
+                fields: [
+                    {name: "Command", type: "select", items: com1, valueField: "Id", textField: "Name", validate: "required"},
+                    {name: "Time", type: "number", width: 50},
+                    {type: "control"}
+                ],
+                rowClick: function (args) {
+                    alert("clicked " + args.item.Name);
+                },
+                onItemDeleting: function (args) {
+                    alert("Delete from DB " + args.item.Name);
+                }
+            });
+            $("#jsGrid6").jsGrid({
+                width: "100%",
+                height: "400px",
+
+                inserting: true,
+                editing: false,
+                sorting: true,
+                paging: true,
+
+                data: clients,
+
+                fields: [
+                    {name: "Command", type: "select", items: com1, valueField: "Id", textField: "Name", validate: "required"},
+                    {name: "Time", type: "number", width: 50},
+                    {type: "control"}
+                ],
+                rowClick: function (args) {
+                    alert("clicked " + args.item.Name);
+                },
+                onItemDeleting: function (args) {
+                    alert("Delete from DB " + args.item.Name);
+                }
+            });
+        </script>
+    </body>
+</html>

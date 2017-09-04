@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        
+        <script type="text/javascript" src="JS/eventemitter2.min.js"></script>
+        <script type="text/javascript" src="JS/roslib.min.js"></script>
+        <script type="text/javascript" src="JS/drone.js"></script>
+        <script type="text/javascript" src="JS/commands.js"></script>
+        <script type="text/javascript" src="JS/timeline.js"></script>
+        <script type="text/javascript" src="JS/project.js"></script>
+        <script type="text/javascript" src="JS/db.js"></script>
+        <script type="text/javascript">
+            var ros = new ROSLIB.Ros({
+            url: 'ws://localhost:9090'
+             });
+            var currentProject;
+        </script>
+    </head>
+    <body>
+
+        <button onclick="read('00-01')">Read 00-01</button>
+        <button onclick="readAll()">Read all </button>
+        <button onclick="add('00-02')">Save Project </button>
+        <button onclick="remove('00-01')">Delete Project </button>
+
+    </body>
+</html>

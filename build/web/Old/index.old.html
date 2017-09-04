@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple ROS Start and Stop Interface</title>
+    <link rel="stylesheet" href="CSS/jquery-ui.css">
+    <script src="JS/jquery-3.2.1.js"></script>
+    <script src="JS/jquery-ui.js"></script>
+    <script type="text/javascript" src="JS/eventemitter2.min.js"></script>
+    <script type="text/javascript" src="JS/roslib.min.js"></script>
+    <script type="text/javascript" src="JS/drone.js"></script>
+    <script type="text/javascript" src="JS/commands.js"></script>
+    <script type="text/javascript" src="JS/timeline.js"></script>
+    <script type="text/javascript" src="JS/project.js"></script>
+    <script type="text/javascript" src="JS/simulator.js"></script>
+    <script type="text/javascript">
+        // Connecting to ROS
+        // -----------------
+        var myvar;
+        var myvar2;
+
+        var ros = new ROSLIB.Ros({
+            url: 'ws://localhost:9090'
+        });
+
+        ros.on('connection', function () {
+            console.log('Connected to websocket server.');
+        });
+
+        ros.on('error', function (error) {
+            console.log('Error connecting to websocket server: ', error);
+        });
+
+        ros.on('close', function () {
+            console.log('Connection to websocket server closed.');
+        });
+        
+        const projectData2 = 
+    {
+        id: "00-03", name: "SimpleTest2", version: 0.1,
+        timelines:
+                [{name: "com", object: "ardrone_1",commands: [
+                            {id: "00-01", name: "takeoff", period: 30, object: "ardrone_1"},
+                            {id: "00-02", name: "hover", period: 30, object: "ardrone_1"},
+                            {id: "00-03", name: "takeoff", period: 30, object: "ardrone_1"},
+                            {id: "00-04", name: "hover", period: 30, object: "ardrone_1"}
+                        ]},
+                    {name: "com2", object: "ardrone_2", commands:
+                                [{id: "00-01", name: "takeoff", period: 30, object: "ardrone_2"},
+                                    {id: "00-02", name: "hover", period: 30, object: "ardrone_2"},
+                                    {id: "00-03", name: "takeoff", period: 30, object: "ardrone_2"},
+                                    {id: "00-04", name: "hover", period: 30, object: "ardrone_2"}
+
+                                ]}
+                ]};
+
+        var app = new MainTest(); 
+
+        /* var command1 = commandMap['takeoff'];
+        var take = command1(drone1,2000);
+        take.execute();
+        */
+    </script>
+    <script>
+        $(function () {
+            $("#Load").click(function (event) {
+                
+                app.load(projectData2);
+            });
+        });
+        $(function () {
+            $("#Run").click(function (event) {
+                 app.play();
+            });
+        });
+        $(function () {
+            $("#Save").click(function (event) {
+                var out = app.project.toJson();
+                var jj=JSON.parse(out);
+                console.log(out);
+            });
+        });
+    </script>
+
+    <body>
+        <div class="widget">
+
+            <h1>Drone</h1>
+            <button class="ui-button ui-widget ui-corner-all" id="Load">Load </button>
+            <button class="ui-button ui-widget ui-corner-all" id="Run" >Run</button>
+            <button class="ui-button ui-widget ui-corner-all" id="Save" >Save</button>
+            <a href='Transact.html'>Test DB</a>
+        </div>
+    </body>
+</html>

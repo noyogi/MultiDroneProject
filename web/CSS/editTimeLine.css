@@ -1,0 +1,74 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02.09.2017, 10:48:00
+    Author     : student
+*/
+body, html {
+      font-family: sans-serif;
+      font-size: 11pt;
+    }
+    
+#page1{
+    display:block;    
+}
+
+#page22{
+   display:block;   
+
+}
+
+#page33{
+   display:block;   
+    
+}
+    
+#activeLabel{
+    width: 30%;
+    float: left;
+    margin: 1em 1em 1em 1em;
+    
+}
+
+#activeButton{
+    float: left;
+    margin: 1em 1em 1em 1em;
+}
+
+#objectLabel{
+    width: 20%;
+    float: left;
+    margin: 1em 1em 1em 1em;
+}
+#objectChoose{
+    float: left;
+    margin: 1em 1em 1em 1em;
+}
+
+
+ #timeline {
+    float: left;
+    margin: 2em 1em 2em 1em;
+    width:29%;
+    background-color: gainsboro;
+}
+
+#visualization{
+    margin: 2em 1em 2em 1em;
+    width:80%;
+    background-color: gainsboro;  
+}
+
+#log{
+    margin: 2em 1em 2em 1em;
+    width:80%;
+    background-color: gainsboro;    
+    
+}
+
+#header{
+    margin: 2em 1em 2em 1em;
+}

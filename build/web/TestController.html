@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Simple ROS Start and Stop Interface</title>
+        <link rel="stylesheet" href="CSS/jquery-ui.css">
+        <script src="JS/jquery-3.2.1.js"></script>
+        <script src="JS/jquery-ui.js"></script>
+        <script type="text/javascript" src="JS/eventemitter2.min.js"></script>
+        <script type="text/javascript" src="JS/roslib.min.js"></script>
+        <script type="text/javascript" src="JS/drone.js"></script>
+        <script type="text/javascript" src="JS/commands.js"></script>
+        <script type="text/javascript" src="JS/timeline.js"></script>
+        <!-- <script type="text/javascript" src="JS/simulator.js"></script> -->
+        <script type="text/javascript">
+
+            // Connecting to ROS
+            // -----------------
+            var myvar;
+            var myvar2;
+
+            var ros = new ROSLIB.Ros({
+                url: 'ws://localhost:9090'
+            });
+
+            ros.on('connection', function () {
+                console.log('Connected to websocket server.');
+            });
+
+            ros.on('error', function (error) {
+                console.log('Error connecting to websocket server: ', error);
+            });
+
+            ros.on('close', function () {
+                console.log('Connection to websocket server closed.');
+            });
+
+
+            // Subscribing to a Topic
+            // ----------------------
+
+            var listener = new ROSLIB.Topic({
+                ros: ros,
+                name: '/listener',
+                messageType: 'std_msgs/String'
+            });
+
+            listener.subscribe(function (message) {
+                console.log('Received message on ' + listener.name + ': ' + message.data);
+                listener.unsubscribe();
+            });
+            
+            var ardrone = new drone('ardrone_1');
+
+           /*  var sim = new Simulator(1);
+            var t = sim.createTimeLine();
+            t.load(1);
+
+            var t1 = sim.createTimeLine1();
+            t1.load(1);
+
+            var t2 = sim.createTimeLine2();
+            t2.load(1);
+*/
+        </script>
+        <script>
+            $(function () {
+                $("#Start").click(function (event) {
+                    event.preventDefault();
+                    ardrone.takeoff();
+                });
+                $("#Land").click(function (event) {
+                    event.preventDefault();
+                    ardrone.land();
+                });
+                $("#For").click(function (event) {
+                    event.preventDefault();
+                    ardrone.forward();
+                });
+                $("#Back").click(function (event) {
+                    event.preventDefault();
+                    ardrone.backward();
+                });
+                $("#Up").click(function (event) {
+                    event.preventDefault();
+                    ardrone.up();
+                });
+                $("#Down").click(function (event) {
+                    event.preventDefault();
+                    ardrone.down();
+                });
+                $("#Hover").click(function (event) {
+                    event.preventDefault();
+                    ardrone.hover();
+                });
+
+                $("#Simulate").click(function (event) {
+                    event.preventDefault();
+
+                    t.play();
+                    t1.play();
+                    t2.play();
+                });
+                var myData = {'mber1': 'id', 'number2': 'is'};
+                
+                $("#Save").click(function (event) {
+                    $.ajax({
+                        url: '/DroneChorograph/saveJSON',
+                        type: 'POST',
+                        data: JSON.stringify(myData),
+                        dataType: "json",
+                        processData:false,
+                        success: function (data) {
+                            alert('Load was performed.');
+                        }
+                    });
+                });
+            });
+
+
+
+        </script>
+
+
+
+    </head>
+
+    <body>
+        <div class="widget">
+            <h1>Drone</h1>
+            <button class="ui-button ui-widget ui-corner-all" id="Start">Start Drone </button>
+            <button class="ui-button ui-widget ui-corner-all" id="For">Forward Drone </button>
+            <button class="ui-button ui-widget ui-corner-all" id="Back">Backward Drone </button>
+            <button class="ui-button ui-widget ui-corner-all" id="Land">Land Drone </button>
+            <button class="ui-button ui-widget ui-corner-all" id="Up">Up </button>
+            <button class="ui-button ui-widget ui-corner-all" id="Down">Down </button>
+            <button class="ui-button ui-widget ui-corner-all" id="Hover">Hover </button>
+            <button class="ui-button ui-widget ui-corner-all" id="Simulate">Simulate </button>
+            <button class="ui-button ui-widget ui-corner-all" id="Save">Save </button>
+            <p id="time"></p>
+            <p id="Comment"></p>
+
+        </div>
+    </body>
+</html>

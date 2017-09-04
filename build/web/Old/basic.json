@@ -1,0 +1,97 @@
+{
+    "Projects": [ {
+        "id": "1",
+        "name": "simple",
+        "timelines": [{
+                "object": "drone",
+                "name": "ardrone_1",
+                "commands": [
+                    {
+                        "command": "takeoff",
+                        "time": "1000"
+                    },
+                    {
+                        "command": "hover",
+                        "time": "2000"
+                    },
+                    {
+                        "command": "hover",
+                        "time": "2000"
+                    },
+                    {
+                        "command": "land",
+                        "time": "1000"
+                    }
+                ]
+            }, {
+                "object": "drone",
+                "name": "ardrone_2",
+                "commands": [
+                    {
+                        "command": "takeoff",
+                        "time": "1000"
+                    },
+                    {
+                        "command": "hover",
+                        "time": "2000"
+                    },
+                    {
+                        "command": "hover",
+                        "time": "2000"
+                    },
+                    {
+                        "command": "land",
+                        "time": "1000"
+                    }
+                ]
+            }]   
+    },
+
+    {
+        "id": "1",
+        "name": "simple",
+        "timelines": [{
+                "object": "drone",
+                "name": "ardrone_1",
+                "commands": [
+                    {
+                        "command": "takeoff",
+                        "time": "1000"
+                    },
+                    {
+                        "command": "hover",
+                        "time": "2000"
+                    },
+                    {
+                        "command": "hover",
+                        "time": "2000"
+                    },
+                    {
+                        "command": "land",
+                        "time": "1000"
+                    }
+                ]
+            }, {
+                "object": "drone",
+                "name": "ardrone_2",
+                "commands": [
+                    {
+                        "command": "takeoff",
+                        "time": "1000"
+                    },
+                    {
+                        "command": "hover",
+                        "time": "2000"
+                    },
+                    {
+                        "command": "hover",
+                        "time": "2000"
+                    },
+                    {
+                        "command": "land",
+                        "time": "1000"
+                    }
+                ]
+            }]   
+    }]
+}
