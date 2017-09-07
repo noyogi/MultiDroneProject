@@ -417,7 +417,10 @@ and open the template in the editor.
             <div id="log"></div>
 
             <script type="text/javascript">
+                var timeLines = new Array();
+                
                 function createTimelines() {
+                    var numtimelines = project1.timelines.length;
                     var sets = new Array();
                     for (var jj = 0; jj < project1.timelines.length; jj++) {
                         var ms = new Date().getTime();
@@ -434,20 +437,10 @@ and open the template in the editor.
                         }
                         sets.push(set);
                     }
-                    // note that months are zero-based in the JavaScript Date object, so month 3 is April
-                    var items = new vis.DataSet([
-                        {id: 1, content: 'item 1', start: new Date(2017, 3, 1, 23, 50, 59), end: new Date(2017, 3, 1, 23, 51, 59)},
-                        {id: 2, content: 'item 2', start: new Date(2017, 3, 1, 23, 51, 59), end: new Date(2017, 3, 1, 23, 53, 59)},
-                        {id: 3, content: 'item 3', start: new Date(2017, 3, 1, 23, 53, 59), end: new Date(2017, 3, 1, 23, 57, 59)},
-                        {id: 4, content: 'item 4', start: new Date(2017, 3, 1, 23, 57, 59), end: new Date(2017, 3, 1, 23, 58, 59)},
-                        {id: 5, content: 'item 5', start: new Date(2017, 3, 1, 23, 58, 59), end: new Date(2017, 3, 1, 23, 59, 59)}
-                    ]);
-
-                    var min = new Date(2017, 3, 1, 23, 50, 59); // 1 april
-                    var max = new Date(2017, 3, 1, 23, 59, 59); // 1 april
+                     
 
                     var container = new Array();
-                    for (var j = 1; j < 7; j++) {
+                    for (var j = 1; j < numtimelines+1; j++) {
                         var name = "visualization" + j;
                         container.push(document.getElementById(name));
                     }
@@ -515,14 +508,18 @@ and open the template in the editor.
                             });
                         }
                     };
-
-                    var timeLines = new Array();
-                    for (var j = 0; j < 6; j++) {
-                        timeLines.push(new vis.Timeline(container[j], sets[j], options));
+                    
+                    
+                    //Clean existing timelines
+                    for (var t = 0; t < timeLines.length; t++) {
+                               timeLines[t].destroy();
                     }
-                    items.on('*', function (event, properties) {
-                        logEvent(event, properties);
-                    });
+                     
+                    //Render new timelines
+                    for (var tt = 0; tt < numtimelines; tt++) {
+                        timeLines.push(new vis.Timeline(container[tt], sets[tt], options));
+                    }
+                     
 
                     function logEvent(event, properties) {
                         var log = document.getElementById('log');
