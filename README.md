@@ -5,6 +5,7 @@ The project aims to write a simple control editor for multidrone environments. T
 ##Initalisation
 Please follow the instructions in the docs folder and install ROS-indigo, the gazebo environment and the multidrone environment of TUM. You can then launch the mulitdrone project.
 
+
 ...
 source ./devel/setup.bash
 roscore&
