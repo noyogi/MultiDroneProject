@@ -60,7 +60,7 @@ const projectData = [
                                     {id: "00-02", name: "hover", period: 2000, object: "ardrone_2"},
                                     {id: "00-03", name: "backward", period: 1000, object: "ardrone_2"},
                                     {id: "00-04", name: "up", period: 1000, object: "ardrone_2"},
-				    {id: "00-05", name: "foreward", period: 1000, object: "ardrone_2"},
+				    {id: "00-05", name: "forward", period: 1000, object: "ardrone_2"},
                                     {id: "00-04", name: "land", period: 1000, object: "ardrone_2"},
 
                                 ]}
@@ -174,6 +174,28 @@ function add(iid) {
     }
 }
 
+
+function put(iid) {
+    if (typeof project1 !== "undefined") {
+        project1.iid = iid;
+        var projectJson = project1.toJson();
+        var projectDB = JSON.parse(projectJson);
+        var request = db.transaction(["projects"], "readwrite")
+                .objectStore("projects")
+                .put(projectDB);
+
+        request.onsuccess = function (event) {
+            alert("Project has been updated to your database.");
+        };
+
+        request.onerror = function (event) {
+            alert("Unable to add data\r\nProject aready exists in your database! ");
+        };
+    }
+}
+
+
+
 function remove(id) {
     var request = db.transaction(["projects"], "readwrite")
             .objectStore("projects")
@@ -278,7 +300,15 @@ function loadProjectInGrid(project) {
  */
 function saveGridToProject(project) {
     
-    var tmpProject = new Project("tmpProj","v 0.0","00-001");
+    var projectName="";
+    if(project1.name !== "undefined"){
+        projectName= project1.name;
+    }
+    else{
+        projectName="tmpProj";
+    }
+    
+    var tmpProject = new Project(projectName,"v 0.0","00-001");
     /*
      * Looping over all of our grids. We skip the robot for now
      */

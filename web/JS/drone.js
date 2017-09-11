@@ -20,11 +20,11 @@ class drone {
         this.name = dname;
         /**
          * Command to take of called from takeoff
-         * Empty message
+         * Empty message must be changed
          */
         this.cmdTakeOff = new ROSLIB.Topic({
             ros: ros,
-            name: '/' + dname + '/ardrone/takeoff',
+            name: '/ardrone/takeoff',
             messageType: 'std_msgs/Empty'
         });
         
@@ -36,7 +36,7 @@ class drone {
         
         this.cmdLand = new ROSLIB.Topic({
             ros: ros,
-            name: '/' + dname + '/takeoff',
+            name: 'ardrone/land',
             messageType: 'std_msgs/Empty'
         });
 
@@ -62,7 +62,7 @@ class drone {
          */
         this.cmdVel = new ROSLIB.Topic({
             ros: ros,
-            name: '/' + dname + '/cmd_vel',
+            name: '/cmd_vel',
             messageType: 'geometry_msgs/Twist'
         });
 
