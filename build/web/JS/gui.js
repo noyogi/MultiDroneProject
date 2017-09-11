@@ -169,7 +169,7 @@ function add(iid) {
         };
 
         request.onerror = function (event) {
-            alert("Unable to add data\r\nProject aready exists in your database! ");
+            put(iid);
         };
     }
 }
@@ -189,7 +189,7 @@ function put(iid) {
         };
 
         request.onerror = function (event) {
-            alert("Unable to add data\r\nProject aready exists in your database! ");
+            alert("Unable to modify data\r\nProject was deleted.");
         };
     }
 }
