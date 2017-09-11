@@ -104,10 +104,11 @@ class cturnRight extends command {
 class cturnLeft extends command {
     constructor(oobject, duration) {
         super(oobject, duration);
+        this.name = "turnLeft";
+        
     }
     execute() {
-        this.object.turnRight();
-        this.name = "turnLeft";
+        this.object.turnLeft();
     }
 }
 

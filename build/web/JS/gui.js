@@ -50,18 +50,23 @@ const projectData = [
         iid: "00-01", name: "SimpleTest", version: 0.1,
         timelines:
                 [{name: "com", object: "ardrone_1", commands: [
-                            {id: "00-01", name: "takeoff", period: 3000, object: "ardrone_1"},
+                            {id: "00-01", name: "takeoff", period: 5000, object: "ardrone_1"},
                             {id: "00-02", name: "hover", period: 3000, object: "ardrone_1"},
-                            {id: "00-03", name: "up", period: 1000, object: "ardrone_1"},
-                            {id: "00-04", name: "land", period: 3000, object: "ardrone_1"}
+                            {id: "00-03", name: "up", period: 7000, object: "ardrone_1"},
+                            {id: "00-03", name: "down", period: 7000, object: "ardrone_1"},
+                            {id: "00-03", name: "turnRight", period: 10000, object: "ardrone_1"},
+                            {id: "00-03", name: "turnLeft", period: 10000, object: "ardrone_1"},
+                            {id: "00-04", name: "land", period: 5000, object: "ardrone_1"}
                         ]},
                     {name: "com2", object: "ardrone_2", commands:
-                                [{id: "00-01", name: "takeoff", period: 1000, object: "ardrone_2"},
-                                    {id: "00-02", name: "hover", period: 2000, object: "ardrone_2"},
-                                    {id: "00-03", name: "backward", period: 1000, object: "ardrone_2"},
-                                    {id: "00-04", name: "up", period: 1000, object: "ardrone_2"},
-				    {id: "00-05", name: "forward", period: 1000, object: "ardrone_2"},
-                                    {id: "00-04", name: "land", period: 1000, object: "ardrone_2"},
+                                [
+                            {id: "00-01", name: "takeoff", period: 5000, object: "ardrone_1"},
+                            {id: "00-02", name: "hover", period: 3000, object: "ardrone_1"},
+                            {id: "00-03", name: "up", period: 7000, object: "ardrone_1"},
+                            {id: "00-03", name: "down", period: 5000, object: "ardrone_1"},
+                            {id: "00-03", name: "turnLeft", period: 10000, object: "ardrone_1"},
+                            {id: "00-03", name: "turnRight", period: 10000, object: "ardrone_1"},
+                            {id: "00-04", name: "land", period: 5000, object: "ardrone_1"}
 
                                 ]}
                 ]}
