@@ -25,7 +25,7 @@ and open the template in the editor.
         <script type="text/javascript" src="JS/timeline.js"></script>
         <script type="text/javascript" src="JS/project.js"></script>
         <script src="JS/wavesurfer.min.js"></script>
-        
+
         <script type="text/javascript" src="VIS/vis.js"></script>
         <link href="VIS/vis-timeline-graph2d.min.css" rel="stylesheet" type="text/css" />
 
@@ -52,7 +52,7 @@ and open the template in the editor.
             <main>
                 <button onclick="loadDB();">Load Projects</button> 
                 <button onclick="toggleDialog('show');">New Project</button> 
-                
+
                 <p></p>
                 <dialog tabindex="-1" role="dialog" aria-labelledby="myDialog">
                     <form id="Projekt">  
@@ -106,7 +106,7 @@ and open the template in the editor.
             <h1>Timeline Editor</h1>
             <div id="header">
                 <button onclick="togglePage2();togglePage1()">Reset Project</button>
-                <button onclick="saveGridToProject(project1);togglePage2();togglePage3();createTimelines();createSound();">Save and Render Project</button>
+                <button onclick="saveGridToProject(project1);togglePage2();togglePage3();createSound();">Save and Render Project</button>
                 The robot is not integrated yet.
             </div>
             <div id="timeline">
@@ -395,10 +395,10 @@ and open the template in the editor.
             </div>
             <p></p>
             <script >
-                
-                      
+
+
             </script>
-            
+
             <p></p>
             <div id="visualization1"></div>
             <p></p>
@@ -418,20 +418,31 @@ and open the template in the editor.
 
             <script type="text/javascript">
                 var wavesurfer;
-                
-                function createSound(){
-                    
-                 wavesurfer= WaveSurfer.create({
-                     container: '#waveform',
-                      waveColor: 'violet',
-                      progressColor: 'purple'
-                });
-              
-                wavesurfer.load("./Assets/SpreadYourWings.wav");
+                var duration;
+                var haveSound = 0;
+                function createSound() {
+                    if (haveSound == 0) {
+                        wavesurfer = WaveSurfer.create({
+                            container: '#waveform',
+                            waveColor: 'violet',
+                            progressColor: 'purple'
+                        });
+
+                        wavesurfer.load("./Assets/klassik.mp3");
+
+                        wavesurfer.on('ready', function () {
+                            duration = wavesurfer.getDuration() * 1000;
+                            createTimelines();
+                            haveSound = 1;
+                        });
+                    } else {
+                        createTimelines();
+                    }
+
                 }
-          
+
                 var timeLines = new Array();
-                
+
                 function createTimelines() {
                     var numtimelines = project1.timelines.length;
                     var sets = new Array();
@@ -450,52 +461,56 @@ and open the template in the editor.
                         }
                         sets.push(set);
                     }
-                     
+
 
                     var container = new Array();
-                    for (var j = 1; j < numtimelines+1; j++) {
+                    for (var j = 1; j < numtimelines + 1; j++) {
                         var name = "visualization" + j;
                         container.push(document.getElementById(name));
                     }
                     // Configuration for the Timeline, not to edit right now
-
+                    var ms = new Date().getTime();
+                    var startDate = new Date(ms);
+                    var endDate = new Date(ms + duration);
                     var options = {
                         editable: false,
+                        start: startDate,
+                        end: endDate,
                         timeAxis: {scale: 'hour', step: 1}, locale: 'de',
 
                         onAdd: function (item, callback) {
-                             
+
                         },
 
                         onMove: function (item, callback) {
-                            
+
                         },
 
                         onMoving: function (item, callback) {
-                            
+
                             callback(item); // send back the (possibly) changed item
                         },
 
                         onUpdate: function (item, callback) {
-                            
+
                         },
 
                         onRemove: function (item, callback) {
-                           
+
                         }
                     };
-                    
-                    
+
+
                     //Clean existing timelines
                     for (var t = 0; t < timeLines.length; t++) {
-                               timeLines[t].destroy();
+                        timeLines[t].destroy();
                     }
-                     
+
                     //Render new timelines
                     for (var tt = 0; tt < numtimelines; tt++) {
                         timeLines.push(new vis.Timeline(container[tt], sets[tt], options));
                     }
-                     
+
 
                     function logEvent(event, properties) {
                         var log = document.getElementById('log');
